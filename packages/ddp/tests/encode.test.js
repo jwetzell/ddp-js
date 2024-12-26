@@ -2,14 +2,41 @@ const { deepEqual, throws } = require('assert');
 const { describe, it } = require('node:test');
 const ddp = require('../dist/cjs/index');
 
-const goodTests = [];
+const goodTests = [
+  {
+    description: 'simple DDP packet',
+    expected: new Uint8Array([0x40, 0x0f, 0x92, 0x01, 0x45, 0x67, 0x89, 0x10, 0x10, 0x11]),
+    packet: {
+      header: {
+        flags: {
+          version: 1,
+          timecode: false,
+          storage: false,
+          reply: false,
+          query: false,
+          push: false,
+        },
+        sequenceNumber: 15,
+        dataType: {
+          standard: false,
+          type: 2,
+          bitsPerPixel: 4,
+        },
+        sourceOrDestinationID: 1,
+        dataOffset: 1164413200,
+        dataLength: 4113,
+      },
+      data: new Uint8Array([]),
+    },
+  },
+];
 
 const badTests = [];
 
 describe('DDP Message Encoding Pass', () => {
   goodTests.forEach((messageTest) => {
     it(messageTest.description, () => {
-      const encoded = ddp.encode(messageTest.message);
+      const encoded = ddp.encode(messageTest.packet);
       deepEqual(encoded, messageTest.expected);
     });
   });

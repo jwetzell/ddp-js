@@ -114,3 +114,68 @@ export function decode(bytes: Uint8Array): DDPPacket {
     data: bytes.subarray(dataStart),
   };
 }
+
+export function encode(packet: DDPPacket): Uint8Array {
+  let flagByte = packet.header.flags.version << 6;
+
+  let headerLength = 10;
+
+  if (packet.header.flags.timecode) {
+    flagByte += 16;
+    headerLength = 14;
+  }
+
+  if (packet.header.flags.storage) {
+    flagByte += 8;
+  }
+  if (packet.header.flags.reply) {
+    flagByte += 4;
+  }
+  if (packet.header.flags.query) {
+    flagByte += 2;
+  }
+  if (packet.header.flags.push) {
+    flagByte += 1;
+  }
+
+  let dataTypeByte = 0;
+
+  if (!packet.header.dataType.standard) {
+    dataTypeByte += 128;
+  }
+
+  dataTypeByte += packet.header.dataType.type << 3;
+
+  if (packet.header.dataType.bitsPerPixel === 1) {
+    dataTypeByte += 1;
+  } else if (packet.header.dataType.bitsPerPixel === 4) {
+    dataTypeByte += 2;
+  } else if (packet.header.dataType.bitsPerPixel === 8) {
+    dataTypeByte += 3;
+  } else if (packet.header.dataType.bitsPerPixel === 16) {
+    dataTypeByte += 4;
+  } else if (packet.header.dataType.bitsPerPixel === 24) {
+    dataTypeByte += 5;
+  } else if (packet.header.dataType.bitsPerPixel === 32) {
+    dataTypeByte += 6;
+  } else if (packet.header.dataType.bitsPerPixel === 0) {
+    dataTypeByte += 0;
+  } else {
+    throw new Error('DDP packet has unsupported bits per pixel value');
+  }
+
+  const bytes = new Uint8Array(headerLength);
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+
+  view.setUint8(0, flagByte);
+  view.setUint8(1, packet.header.sequenceNumber);
+  view.setUint8(2, dataTypeByte);
+  view.setUint8(3, packet.header.sourceOrDestinationID);
+  view.setUint32(4, packet.header.dataOffset);
+  view.setUint16(8, packet.header.dataLength);
+
+  // const bytes = new Uint8Array([flagByte, sequenceNumberByte, dataTypeByte, packet.header.sourceOrDestinationID])
+  const headerBytes = new Uint8Array(view.buffer, view.byteOffset, view.byteLength);
+
+  return new Uint8Array([...headerBytes, ...packet.data]);
+}
