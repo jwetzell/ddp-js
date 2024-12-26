@@ -29,6 +29,36 @@ const goodTests = [
       data: new Uint8Array([]),
     },
   },
+  {
+    description: 'DDP packet with timecode',
+    expected: new Uint8Array([0x50, 0x0f, 0x92, 0x01, 0x45, 0x67, 0x89, 0x10, 0x10, 0x11, 0x10, 0x11, 0x11, 0x10]),
+    packet: {
+      header: {
+        flags: {
+          version: 1,
+          timecode: true,
+          storage: false,
+          reply: false,
+          query: false,
+          push: false,
+        },
+        sequenceNumber: 15,
+        dataType: {
+          standard: false,
+          type: 2,
+          bitsPerPixel: 4,
+        },
+        sourceOrDestinationID: 1,
+        dataOffset: 1164413200,
+        dataLength: 4113,
+        timecode: {
+          seconds: 4113,
+          fractionalSeconds: 4368,
+        },
+      },
+      data: new Uint8Array([]),
+    },
+  },
 ];
 
 const badTests = [];
