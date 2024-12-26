@@ -97,12 +97,12 @@ export function decode(bytes: Uint8Array): DDPPacket {
     dataLength,
   };
 
-  let dataStart = 10 
+  let dataStart = 10;
   if (flags.timecode) {
     if (bytes.length < 14) {
       throw new Error('DDP packet with timecode must be at least 14 bytes');
     }
-    dataStart = 14
+    dataStart = 14;
     header.timecode = {
       seconds: (bytes[10] << 8) + bytes[11],
       fractionalSeconds: (bytes[12] << 8) + bytes[13],
@@ -111,6 +111,6 @@ export function decode(bytes: Uint8Array): DDPPacket {
 
   return {
     header,
-    data: bytes.subarray(dataStart)
+    data: bytes.subarray(dataStart),
   };
 }

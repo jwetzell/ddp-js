@@ -2,13 +2,9 @@ const { deepEqual, throws } = require('assert');
 const { describe, it } = require('node:test');
 const ddp = require('../dist/cjs/index');
 
-const goodTests = [
-  
-];
+const goodTests = [];
 
-const badTests = [
-  
-];
+const badTests = [];
 
 describe('DDP Message Encoding Pass', () => {
   goodTests.forEach((messageTest) => {

@@ -26,7 +26,7 @@ const goodTests = [
         dataOffset: 1164413200,
         dataLength: 4113,
       },
-      data: new Uint8Array([])
+      data: new Uint8Array([]),
     },
   },
   {
@@ -56,8 +56,7 @@ const goodTests = [
           fractionalSeconds: 4368,
         },
       },
-      data: new Uint8Array([])
-
+      data: new Uint8Array([]),
     },
   },
 ];
