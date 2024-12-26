@@ -1,0 +1,28 @@
+{
+  "name": "ddp",
+  "version": "0.0.0",
+  "private": true,
+  "author": {
+    "name": "Joel Wetzell",
+    "email": "me@jwetzell.com",
+    "url": "https://jwetzell.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwetzell/ddp-js.git"
+  },
+  "scripts": {
+    "lint:check": "eslint ./",
+    "format:check": "prettier ./ --check",
+    "format:write": "prettier ./ --write"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "prettier": "3.4.2",
+    "eslint": "8.48.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "9.1.0"
+  }
+}
