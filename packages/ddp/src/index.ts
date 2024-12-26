@@ -174,12 +174,12 @@ export function encode(packet: DDPPacket): Uint8Array {
   view.setUint32(4, packet.header.dataOffset);
   view.setUint16(8, packet.header.dataLength);
 
-  if(packet.header.flags.timecode){
-    if(packet.header.timecode !== undefined){
-      view.setUint16(10, packet.header.timecode?.seconds)
-      view.setUint16(12, packet.header.timecode?.fractionalSeconds)
-    }else{
-      throw new Error("DDP packet had timecode flag set but no timecode value supplied")
+  if (packet.header.flags.timecode) {
+    if (packet.header.timecode !== undefined) {
+      view.setUint16(10, packet.header.timecode?.seconds);
+      view.setUint16(12, packet.header.timecode?.fractionalSeconds);
+    } else {
+      throw new Error('DDP packet had timecode flag set but no timecode value supplied');
     }
   }
 
