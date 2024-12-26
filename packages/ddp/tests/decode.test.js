@@ -67,7 +67,6 @@ describe('DDP Message Decoding Pass', () => {
   goodTests.forEach((messageTest) => {
     it(messageTest.description, () => {
       const decoded = ddp.decode(messageTest.bytes);
-      console.log(decoded.header);
       deepEqual(decoded, messageTest.expected);
     });
   });
