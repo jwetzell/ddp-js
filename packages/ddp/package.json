@@ -15,9 +15,6 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsdown",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:types": "tsc -p tsconfig.types.json",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
     "test": "node --test --experimental-test-coverage"
