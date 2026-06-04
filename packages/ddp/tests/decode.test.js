@@ -1,6 +1,6 @@
 const { deepEqual, throws } = require('assert');
 const { describe, it } = require('node:test');
-const ddp = require('../dist/cjs/index');
+const ddp = require('@jwetzell/ddp');
 
 const goodTests = [
   {
